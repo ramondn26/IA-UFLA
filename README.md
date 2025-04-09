@@ -78,7 +78,7 @@ pip install -r requirements.txt
 2. **Execute o script:**
 
 ```bash
-python nome_do_script.py
+python knn.py
 ```
 
 Durante a execução, o script:
@@ -95,7 +95,7 @@ Durante a execução, o script:
 ```
 ├── README.md
 ├── Iris.csv
-└── nome_do_script.py
+└── knn.py
 ```
 
 ---
