@@ -103,10 +103,10 @@ for k in k_values:
     print("Matriz de Confusão:")
     print(cm)
 
-# Plot da matriz de confusão para o k com melhor acurácia no classificador customizado
-best_k_custom = max(results_custom, key=lambda k: results_custom[k]['accuracy'])
-cm_best_custom = results_custom[best_k_custom]['confusion_matrix']
-plot_confusion_matrix(cm_best_custom, f'Matriz de Confusão (Customizado) para k = {best_k_custom}')
+# Plot da matriz de confusão para cada k no classificador customizado
+for k in k_values:
+    cm_custom = results_custom[k]['confusion_matrix']
+    plot_confusion_matrix(cm_custom, f'Matriz de Confusão (Customizado) para k = {k}')
 
 # ===============================================================
 # 3. IMPLEMENTAÇÃO COM SKLEARN (CLASSIFICADOR COM LIBRARY)
@@ -138,10 +138,10 @@ for k in k_values:
     print("Matriz de Confusão:")
     print(cm)
 
-# Plot da matriz de confusão para o k com melhor acurácia no classificador do sklearn
-best_k_sklearn = max(results_sklearn, key=lambda k: results_sklearn[k]['accuracy'])
-cm_best_sklearn = results_sklearn[best_k_sklearn]['confusion_matrix']
-plot_confusion_matrix(cm_best_sklearn, f'Matriz de Confusão (Sklearn) para k = {best_k_sklearn}')
+# Plot da matriz de confusão para cada k no classificador Sklearn
+for k in k_values:
+    cm_sklearn = results_sklearn[k]['confusion_matrix']
+    plot_confusion_matrix(cm_sklearn, f'Matriz de Confusão (Sklearn) para k = {k}')
 
 # ===============================================================
 # 4. ANÁLISE DE DESEMPENHO
@@ -182,7 +182,8 @@ sklearn_time = [results_sklearn[k]['time'] for k in k_vals]
 
 # Função para criar gráfico comparativo de barras
 def plot_comparison(metric_custom, metric_sklearn, metric_name, ylabel):
-    x = np.arange(len(k_vals))
+    # Use os valores reais de k para o eixo x
+    x = np.array(k_vals)  # k_vals deve conter [1, 3, 5, 7]
     width = 0.35
     plt.figure(figsize=(8,6))
     plt.bar(x - width/2, metric_custom, width, label='Customizado')
@@ -190,13 +191,13 @@ def plot_comparison(metric_custom, metric_sklearn, metric_name, ylabel):
     plt.xlabel('Valores de k')
     plt.ylabel(ylabel)
     plt.title(f'Comparação de {metric_name} por k')
-    plt.xticks(x, k_vals)
+    plt.xticks(x)  
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.5)
     # Anota os valores acima de cada barra
-    for i in x:
-        plt.text(i - width/2, metric_custom[i] + 0.01, f'{metric_custom[i]:.2f}', ha='center')
-        plt.text(i + width/2, metric_sklearn[i] + 0.01, f'{metric_sklearn[i]:.2f}', ha='center')
+    for idx, val in enumerate(x):
+        plt.text(val - width/2, metric_custom[idx] + 0.01, f'{metric_custom[idx]:.2f}', ha='center')
+        plt.text(val + width/2, metric_sklearn[idx] + 0.01, f'{metric_sklearn[idx]:.2f}', ha='center')
     plt.tight_layout()
     plt.show()
 
