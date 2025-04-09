@@ -28,7 +28,7 @@ O código realiza:
 ### Clonando o Repositório
 
 ```bash
-git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
+git clone https://github.com/ramondn26/IA-UFLA
 ```
 
 ### Criando um Ambiente Virtual (Opcional, mas Recomendado)
